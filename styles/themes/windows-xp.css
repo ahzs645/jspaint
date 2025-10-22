@@ -1,0 +1,286 @@
+/* Windows XP Theme for JS Paint using XP.css */
+@import "../../lib/xp.css/XP.css";
+@import "../../lib/os-gui/build/layout.css";
+
+:root {
+	--theme-loaded: "windows-xp.css";
+
+	/* Windows XP Colors */
+	--ButtonFace: #ece9d8;
+	--ButtonText: #000000;
+	--ButtonShadow: #aca899;
+	--ButtonDkShadow: #716f64;
+	--ButtonHilight: #ffffff;
+	--Window: #ffffff;
+	--WindowText: #000000;
+	--AppWorkspace: #3a6ea5;
+	--Hilight: #0a246a;
+	--HilightText: #ffffff;
+	--Background: #3a6ea5;
+	--GrayText: #808080;
+	--ActiveTitle: #0054e3;
+	--GradientActiveTitle: #3985d6;
+	--InactiveTitle: #7a96df;
+	--GradientInactiveTitle: #a0b8e8;
+}
+
+.jspaint {
+	background: var(--ButtonFace);
+}
+
+body,
+.canvas-area {
+	background: var(--AppWorkspace);
+}
+
+.canvas-area > canvas {
+	background: var(--checker);
+	background-size: 8px;
+}
+
+/* Show images as pixelated if at pixel-perfect scales. */
+@media (resolution: 1x), (resolution: 2x), (min-resolution: 3x) {
+	* {
+		image-rendering: -moz-crisp-edges;
+		image-rendering: crisp-edges;
+		image-rendering: pixelated;
+	}
+}
+@media (-webkit-device-pixel-ratio: 1), (-webkit-device-pixel-ratio: 2), (-webkit-device-pixel-ratio: 3) {
+	* {
+		image-rendering: -moz-crisp-edges;
+		image-rendering: crisp-edges;
+		image-rendering: pixelated;
+	}
+}
+
+.disable-aa-for-things-at-main-canvas-scale .main-canvas,
+.disable-aa-for-things-at-main-canvas-scale .selection canvas {
+	image-rendering: -moz-crisp-edges;
+	image-rendering: crisp-edges;
+	image-rendering: pixelated;
+}
+.thumbnail-img {
+	image-rendering: auto;
+}
+
+.selection:after,
+.textbox:after {
+	content: "";
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	outline: 1px dashed black;
+	box-shadow: 0 0 0 1px white;
+}
+
+.canvas-area .handle {
+	background: var(--Hilight);
+}
+.canvas-area .useless-handle {
+	background: var(--HilightText);
+	box-shadow: 1px 1px 0 var(--Hilight) inset;
+}
+
+.resize-ghost {
+	outline: 1px dotted #ccc;
+	mix-blend-mode: difference;
+}
+
+.status-area {
+	gap: 2px;
+	font-family: "Tahoma", "Segoe UI", sans-serif;
+	font-size: 11px;
+	color: var(--ButtonText);
+	padding-top: 2px;
+}
+.status-field {
+	height: 21px;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+}
+
+.tool-options {
+	border: 1px solid var(--ButtonHilight);
+	border-top-color: var(--ButtonShadow);
+	border-left-color: var(--ButtonShadow);
+}
+
+.tool {
+	margin: 0;
+	padding: 0;
+	width: 25px;
+	height: 25px;
+	border: 0;
+	border-right: 1px solid var(--ButtonDkShadow);
+	border-bottom: 1px solid var(--ButtonDkShadow);
+	background: transparent;
+	outline: 0;
+}
+.tool:before {
+	content: " ";
+	position: absolute;
+	z-index: 1;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	border-top: 1px solid var(--ButtonHilight);
+	border-left: 1px solid var(--ButtonHilight);
+	border-right: 1px solid var(--ButtonShadow);
+	border-bottom: 1px solid var(--ButtonShadow);
+}
+.tool:hover:active {
+	padding: 1px;
+	background: transparent !important;
+}
+.tool:hover:active,
+.tool.selected {
+	padding-bottom: 2px;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	border-top: 1px solid var(--ButtonDkShadow);
+	border-left: 1px solid var(--ButtonDkShadow);
+	border-right: 1px solid var(--ButtonHilight);
+	border-bottom: 1px solid var(--ButtonHilight);
+}
+.tool:hover:active:before,
+.tool.selected:before {
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	border-top: 1px solid var(--ButtonShadow);
+	border-left: 1px solid var(--ButtonShadow);
+	border-right: 1px solid var(--ButtonFace);
+	border-bottom: 1px solid var(--ButtonFace);
+}
+.tool.selected,
+.current-colors {
+	background: var(--checker);
+}
+.tool-icon {
+	background-image: url("../../images/classic/tools.png");
+	background-repeat: no-repeat;
+	background-position: calc(-16px * var(--icon-index)) 0;
+}
+.tool-icon.use-svg {
+	background-image: url("../../images/classic/tools.svg");
+	background-position: calc(-16px * (var(--icon-index) * 2 + 1)) -16px;
+}
+
+.tools {
+	height: 200px;
+	width: 50px;
+}
+
+.current-colors {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+.color-selection {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	border-top: 1px solid var(--ButtonHilight);
+	border-left: 1px solid var(--ButtonHilight);
+	border-right: 1px solid var(--ButtonShadow);
+	border-bottom: 1px solid var(--ButtonShadow);
+}
+.color-selection:after {
+	content: "";
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	border: 1px solid var(--ButtonFace);
+}
+.current-colors,
+.color-button {
+	border-top: 1px solid var(--ButtonShadow);
+	border-left: 1px solid var(--ButtonShadow);
+	border-right: 1px solid var(--ButtonFace);
+	border-bottom: 1px solid var(--ButtonFace);
+}
+.swatch:before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+}
+.color-selection:before {
+	left: 1px;
+	top: 1px;
+	right: 1px;
+	bottom: 1px;
+}
+.color-button:before,
+.current-colors:before,
+.swatch.pattern:before {
+	border-left: 1px solid var(--ButtonDkShadow);
+	border-top: 1px solid var(--ButtonDkShadow);
+}
+.swatch.pattern:before {
+	border-right: 1px solid var(--ButtonDkShadow);
+	border-bottom: 1px solid var(--ButtonDkShadow);
+}
+.current-colors:after,
+.color-button:after {
+	content: "";
+	position: absolute;
+	left: -1px;
+	top: -1px;
+	right: -2px;
+	bottom: -2px;
+	border-right: 1px solid var(--ButtonHilight);
+	border-bottom: 1px solid var(--ButtonHilight);
+}
+
+.window-content {
+	font-family: "Tahoma", Arial, sans-serif;
+	font-size: 11px;
+	color: var(--WindowText);
+}
+
+.tool-window .window-titlebar {
+	font-size: 11px;
+	height: 18px;
+	font-family: "Tahoma", sans-serif;
+	font-weight: bold;
+}
+
+input[type=text],
+input[type=url],
+input[type=search],
+input[type=number],
+input[type=text].inset-deep,
+input[type=url].inset-deep,
+input[type=search].inset-deep,
+input[type=number].inset-deep,
+select.inset-deep {
+	background-color: var(--Window);
+	color: var(--WindowText);
+	font-family: "Tahoma", sans-serif;
+	font-size: 11px;
+	border: 1px solid #7f9db9;
+}
+
+input[type=text]:disabled,
+input[type=url]:disabled,
+input[type=search]:disabled,
+input[type=number]:disabled {
+	background: var(--ButtonFace);
+	color: var(--GrayText);
+}
+
+/* Windows XP blue gradient for title bar */
+.jspaint::before {
+	background: linear-gradient(to right, var(--ActiveTitle), var(--GradientActiveTitle));
+}

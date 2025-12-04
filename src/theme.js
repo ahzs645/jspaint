@@ -22,17 +22,8 @@ function wait_for_theme_loaded(theme, callback) {
 let grinch_button;
 let current_theme;
 try {
-	const grinch = localStorage[disable_seasonal_theme_key] === "true";
-	const is_december = new Date().getMonth() === 11;
-	const running_tests = "Cypress" in window;
-	if (is_december && !grinch && !running_tests) {
-		current_theme = "winter.css"; // overriding theme preference until you disable the seasonal theme
-		wait_for_theme_loaded(current_theme, () => { // could just wait for DOM to load, but theme is needed for the button styling
-			make_grinch_button();
-		});
-	} else {
-		current_theme = localStorage[theme_storage_key] || default_theme;
-	}
+	// Seasonal theme disabled for embedded use
+	current_theme = localStorage[theme_storage_key] || default_theme;
 } catch (error) {
 	console.error(error);
 	current_theme = default_theme;
